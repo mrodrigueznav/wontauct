@@ -77,6 +77,7 @@ module.exports = {
   },
 
   async updateItem(req, res) {
+    console.log(req.body);
     try {
       const { id } = req.params
       logger.debug(`Updating item with ID: ${id} with data: ${JSON.stringify(req.body)}`)

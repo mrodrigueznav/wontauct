@@ -51,7 +51,7 @@ app.use(errorHandler);
 
     // await sequelize.sync({ alter: true });
     app.listen(PORT, () => {
-      logger.info(`Server running on port ${PORT}`);
+      logger.info(`Server running on port ${PORT} ${process.env.NODE_ENV}`);
     });
   } catch (error) {
     logger.error('Unable to connect to the database:', error);
