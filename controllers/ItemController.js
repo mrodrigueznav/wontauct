@@ -117,7 +117,7 @@ module.exports = {
   
       // Identify images to remove
       const currentImages = await Image.findAll({ where: { itemId: id } })
-      const imagesToDelete = currentImages.filter((image) => !existingImages.includes(image.url))
+      const imagesToDelete = currentImages.filter((image) => !existingImages.includes(image))
   
       if (imagesToDelete.length > 0) {
         const imageIdsToDelete = imagesToDelete.map((image) => image.id)
