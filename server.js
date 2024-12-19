@@ -29,9 +29,9 @@ app.use((req, res, next) => {
 app.use('/api/auth', authRoutes); // Use the auth routes
 app.use('/api/users', authenticateFirebaseToken, userRoutes);
 app.use('/api/items', itemRoutes);
-app.use('/api/sales', authenticateFirebaseToken, saleRoutes);
+app.use('/api/sales', saleRoutes);
 app.use('/api/live-auctions', authenticateFirebaseToken, liveAuctionRoutes);
-app.use('/api/images', authenticateFirebaseToken, imageRoutes); // Use the image routes
+app.use('/api/images', imageRoutes); // Use the image routes
 
 // Guardar subasta en Firebase
 app.post('/api/save-auction', async (req, res) => {
