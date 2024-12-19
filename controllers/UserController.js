@@ -1,12 +1,25 @@
 const { User } = require('../models');
 const logger = require('../config/logger');
 
+const defaultAvatar = 'https://lh3.googleusercontent.com/a/ACg8ocJlOcLZVwFu01wKTThYkr_PnyrC3FwbQeEwERd5xpiaRotkalg=s96-c';
+
 module.exports = {
   async createUser(req, res) {
     try {
-      const { username, email, password } = req.body;
-      const newUser = await User.create({ username, email, password });
-      res.status(201).json({ message: 'User created successfully', newUser });
+      const { username, email, userId, avatar } = req.body;
+
+      const randomNumber = Math.floor(10000 + Math.random() * 90000);
+      const newUsertoCreate = {
+        username: username ? username : `Wontollero-${randomNumber}`,
+        email,
+        userId,
+        isVerified: false,
+        isAdmin: false,
+        avatar: avatar ? avatar : defaultAvatar,
+        password: 'NA'
+      }
+      const newUser = await User.create(newUsertoCreate);
+      res.status(201).json({ message: 'User registered successfully', newUser });
     } catch (error) {
       logger.error(`Error creating user: ${error.message}`);
       res.status(500).json({ message: 'Error creating user' });
@@ -71,6 +84,17 @@ module.exports = {
     } catch (error) {
       logger.error(`Error deleting user: ${error.message}`);
       res.status(500).json({ message: 'Error deleting user' });
+    }
+  },
+
+  async userInfo(req, res) {
+    const token = req.header('Authorization')?.split(' ')[1];
+
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      res.status(200).json(decoded);
+    } catch (error) {
+      res.status(400).json({ message: 'Invalid token.' });
     }
   }
 };

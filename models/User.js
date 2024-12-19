@@ -1,4 +1,6 @@
-module.exports = (sequelize, DataTypes) => {
+const { DataTypes } = require('sequelize');
+
+module.exports = (sequelize) => {
     const User = sequelize.define('User', {
       username: {
         type: DataTypes.STRING,
@@ -13,6 +15,23 @@ module.exports = (sequelize, DataTypes) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      userId: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      isAdmin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      isVerified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      avatar: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
     });
   
